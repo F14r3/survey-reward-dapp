@@ -1,0 +1,41 @@
+{
+  "name": "survey-reward-dapp",
+  "version": "1.0.0",
+  "description": "A Survey Rewarding DApp that chooses a Random winner from a list of participants",
+  "main": "index.js",
+  "scripts": {
+    "testrpc": "./node_modules/.bin/ganache-cli --accounts 30",
+    "lint": "./node_modules/.bin/solium -d contracts --fix",
+    "coverage": "./node_modules/.bin/solidity-coverage",
+    "compile": "./node_modules/.bin/truffle compile",
+    "test": "./node_modules/.bin/truffle test",
+    "migrate": "./node_modules/.bin/truffle migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agawish/survey-reward-dapp.git"
+  },
+  "keywords": [
+    "dapp",
+    "ethereum",
+    "truffle",
+    "solidity"
+  ],
+  "author": "Amr Gawish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/agawish/survey-reward-dapp/issues"
+  },
+  "homepage": "https://github.com/agawish/survey-reward-dapp#readme",
+  "devDependencies": {
+    "foreman": "^2.0.0",
+    "ganache-cli": "^6.0.3",
+    "solidity-coverage": "^0.4.9",
+    "solium": "^1.1.5",
+    "truffle": "^4.0.6"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "zeppelin-solidity": "^1.6.0"
+  }
+}
