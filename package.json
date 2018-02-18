@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/agawish/survey-reward-dapp#readme",
   "devDependencies": {
-    "foreman": "^2.0.0",
     "ganache-cli": "^6.0.3",
     "solidity-coverage": "^0.4.9",
     "solium": "^1.1.5",
