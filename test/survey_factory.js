@@ -7,7 +7,6 @@ const {
   expectRevert, //Check if the Solidity returns "revert" exception (usually result from require failed)
 } = require('./helpers/common');
 
-
 contract('SurveyFactory', _accounts => {
   const commonVars = new CommonVariables(_accounts);
 
@@ -25,25 +24,34 @@ contract('SurveyFactory', _accounts => {
     surveyFactory = await SurveyFactory.new({ from: _appOwner });
   });
 
-  describe('createSurvey', () => {
+  describe('Create New Survey', () => {
 
-    it(`1. Given that I'm the SurveyMaker
-        2. When I try to create a new Survey and paid the survey creation cost
-        3. Then I should be able to create a new survey and get its reference`, () => {
-        const surveyId = surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker });
-        surveyId.should.eventually.be.bignumber.equals(0);
+    it(`1. Given that I’m the Survey Maker
+        2. When I try to create a new Survey and included the survey creation cost
+        3. Then I should be able to get the created survey reference number`, async () => {
+
+        let surveyReference = surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker });
+        surveyReference.should.eventually.be.bignumber.equals(0);
+        
+        let surveysCount = surveyFactory.getSurveysCount.call();
+        surveysCount.should.eventually.be.bignumber.equals(1);
+        
       });
 
-    it(`1. Given that I'm the SurveyMaker
-        2. When I try to create a survey without sending the survey creation cost
+    it(`1. Given that I’m the Survey Maker
+        2. When I try to create a new survey without including the survey creation cost
         3. Then I should receive a "revert" Error`, () => {
+
         expectRevert(surveyFactory.createSurvey.call({ from: _surveyMaker }));
+
       });
 
-    it(`1. Given that I'm the AppOwner
-        2. When I try to create a Survey
+    it(`1. Given that I’m the Survey App Owner
+        2. When I try to create a new Survey
         3. Then I should receive a "revert" Error`, () => {
-        expectRevert(surveyFactory.createSurvey.call({ from: _surveyMaker }));
+
+        expectRevert(surveyFactory.createSurvey.call({ from: _appOwner }));
+
       });
 
   });

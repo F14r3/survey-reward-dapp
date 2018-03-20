@@ -8,6 +8,7 @@ const {
 } = require('./helpers/common');
 
 
+
 contract('Survey', _accounts => {
   const commonVars = new CommonVariables(_accounts);
 
@@ -23,7 +24,7 @@ contract('Survey', _accounts => {
   let survey = null;
 
   beforeEach(async () => {
-    surveyFactory = await SurveyFactory.new({ from: _appOwner });
+    //surveyFactory = await SurveyFactory.new({ from: _appOwner });
     // TODO - create a survey!
   });
 
@@ -33,8 +34,8 @@ contract('Survey', _accounts => {
         2. When I try to create a new Survey and paid the survey creation cost
         3. Then I should be able to create a new survey and get its reference`, () => {
 
-        const surveyId = surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker });
-        surveyId.should.eventually.be.bignumber.equals(0);
+        //const surveyId = surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker });
+        //surveyId.should.eventually.be.bignumber.equals(0);
       });
   });
 
