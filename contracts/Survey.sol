@@ -6,7 +6,7 @@ contract Survey {
     address public surveyMaker;
     uint public testvalue;
 
-    function Survey(address _owner) payable public {
+    function Survey(address _owner) public {
         surveyMaker = _owner;
         testvalue = 1;
     }

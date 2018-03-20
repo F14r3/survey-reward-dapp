@@ -20,29 +20,30 @@ contract('SurveyFactory', _accounts => {
 
   let surveyFactory = null;
 
-  beforeEach(async () => {
+  let surveyCreatedEvent;
+
+  before(async () => {
+    console.log('Creating Survey Factory');
     surveyFactory = await SurveyFactory.new({ from: _appOwner });
   });
+
 
   describe('Create New Survey', () => {
 
     it(`1. Given that I’m the Survey Maker
         2. When I try to create a new Survey and included the survey creation cost
-        3. Then I should be able to get the created survey reference number`, async () => {
-
-        let surveyReference = surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker });
-        surveyReference.should.eventually.be.bignumber.equals(0);
-        
-        let surveysCount = surveyFactory.getSurveysCount.call();
-        surveysCount.should.eventually.be.bignumber.equals(1);
-        
+        3. Then I should be able to get the created survey reference number`, () => {
+        return surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker })
+          .then(([surveyId, surveyAddress]) => {
+            return surveyId;
+          }).should.eventually.be.bignumber.equals(0);
       });
 
     it(`1. Given that I’m the Survey Maker
         2. When I try to create a new survey without including the survey creation cost
         3. Then I should receive a "revert" Error`, () => {
 
-        expectRevert(surveyFactory.createSurvey.call({ from: _surveyMaker }));
+        return expectRevert(surveyFactory.createSurvey.call({ from: _surveyMaker }));
 
       });
 
@@ -50,7 +51,7 @@ contract('SurveyFactory', _accounts => {
         2. When I try to create a new Survey
         3. Then I should receive a "revert" Error`, () => {
 
-        expectRevert(surveyFactory.createSurvey.call({ from: _appOwner }));
+        return expectRevert(surveyFactory.createSurvey.call({ from: _appOwner }));
 
       });
 

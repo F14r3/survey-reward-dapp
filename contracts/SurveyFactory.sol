@@ -5,13 +5,18 @@ import "./Survey.sol";
 /// @title SurveyFactory - Creates surveys and charge users
 /// @author Amr Gawish
 contract SurveyFactory {
+    
+    event SurveyCreated(address indexed surveyAddress);
+    
     address[] public surveys;
 
-    function createSurvey() external payable returns(uint surveyId) {
+
+    function createSurvey() external payable returns(uint surveyId, address newSurveyAddress) {
         require(msg.value > 0);
         address newSurvey = new Survey(msg.sender);
+        SurveyCreated(newSurvey);
         uint id = surveys.push(newSurvey) - 1;
-        return id;
+        return (id, newSurvey);
     }
 
     function getSurveysCount() public constant returns(uint surveyCount){
