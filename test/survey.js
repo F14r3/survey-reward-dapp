@@ -19,15 +19,17 @@ contract('Survey', _accounts => {
   const _participants = commonVars.participants;
 
   const _surveyCreationCost = commonVars.surveyCreationCost;
+  const _surveyReward = commonVars.surveyReward;
+  const _surveyRewardAndCreationCost = commonVars.surveyRewardAndCreationCost;
 
   let surveyFactory = null;
   let survey = null;
 
   beforeEach(async () => {
-    //surveyFactory = await SurveyFactory.new({ from: _appOwner });
+    surveyFactory = await SurveyFactory.new(_surveyCreationCost, { from: _appOwner });
     // TODO - create a survey!
   });
-
+  /*
   describe('Survey', () => {
 
     it(`1. Given that I'm the SurveyMaker
@@ -37,6 +39,6 @@ contract('Survey', _accounts => {
         //const surveyId = surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker });
         //surveyId.should.eventually.be.bignumber.equals(0);
       });
-  });
+  });*/
 
 });

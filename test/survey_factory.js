@@ -17,26 +17,42 @@ contract('SurveyFactory', _accounts => {
   const _participants = commonVars.participants;
 
   const _surveyCreationCost = commonVars.surveyCreationCost;
+  const _surveyReward = commonVars.surveyReward;
+  const _surveyRewardAndCreationCost = commonVars.surveyRewardAndCreationCost;
 
   let surveyFactory = null;
 
   let surveyCreatedEvent;
 
-  before(async () => {
-    console.log('Creating Survey Factory');
-    surveyFactory = await SurveyFactory.new({ from: _appOwner });
+  beforeEach(async () => {
+    surveyFactory = await SurveyFactory.new(_surveyCreationCost, { from: _appOwner });
   });
 
 
-  describe('Create New Survey', () => {
+  describe('Create New Survey Test Cases', () => {
 
     it(`1. Given that I’m the Survey Maker
-        2. When I try to create a new Survey and included the survey creation cost
+        2. When I try to create a new Survey and included the survey creation costs and survey reward
         3. Then I should be able to get the created survey reference number`, () => {
-        return surveyFactory.createSurvey.call({ value: _surveyCreationCost, from: _surveyMaker })
+        return surveyFactory.createSurvey.call({ value: _surveyRewardAndCreationCost, from: _surveyMaker })
           .then(([surveyId, surveyAddress]) => {
             return surveyId;
           }).should.eventually.be.bignumber.equals(0);
+      });
+
+    it(`1. Given that I’m the Survey Maker
+        2. When I try to create a new Survey and included the survey creation costs and survey reward
+        3. Then I should be assigned as the owner of the newly created survey`, () => {
+        let newSurveyAddress;
+        return surveyFactory.createSurvey.call({ value: _surveyRewardAndCreationCost, from: _surveyMaker })
+          .then(([surveyId, surveyAddress]) => {
+            newSurveyAddress = surveyAddress;
+            return surveyFactory.createSurvey({ value: _surveyRewardAndCreationCost, from: _surveyMaker });
+          }).then(receipt => {
+            return Survey.at(newSurveyAddress);
+          }).then(surveyInstance => {
+            return surveyInstance.owner.call();
+          }).should.eventually.equal(_surveyMaker);
       });
 
     it(`1. Given that I’m the Survey Maker

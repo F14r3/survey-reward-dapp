@@ -20,6 +20,8 @@ class CommonVariables {
         this.participants = _.difference(_accounts, [_accounts[0], _accounts[1]]);
 
         this.surveyCreationCost = web3.toWei('1', 'ether');
+        this.surveyReward = web3.toWei('1', 'ether');
+        this.surveyRewardAndCreationCost = web3.toWei('2', 'ether');
     }
 }
 
