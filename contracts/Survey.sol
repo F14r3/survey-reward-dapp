@@ -16,7 +16,7 @@ contract Survey {
     /// @param _owner - The survey maker of this survey (needs to be a real address!)
     /// @dev Initialise the Survey with Survey Reward (must be > 0)
     function Survey(address _owner) payable public {
-        require(owner != address(0));
+        require(_owner != address(0));
         require(msg.value > 0);
         
         owner = _owner;
